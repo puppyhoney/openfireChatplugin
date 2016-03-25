@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="YaowangChat build" basedir="../" default="YaowangChat-jar">
+    <property file="${basedir}/build/build.properties" />
+	<!-- 加入环境变量 -->
+	<property environment="env"/>
+	<!-- classpath路径 -->
+	<path id="classpath">
+		<fileset dir="./lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="./openfire">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="./build/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<filelist>
+			<file name="${env.JAVA_HOME}/jre/lib/rt.jar"/>
+		</filelist>
+	</path>
+
+	<!-- 打project jar包 -->
+	<target name="YaowangChat-plugin-jar">
+		<!-- 打包文件夹 -->
+		<delete dir="./build/build"></delete>
+		<mkdir dir="./build/build"></mkdir>
+		<delete file="./build/YaowangChat-plugin.jar"></delete>
+		<!-- 编译java文件 -->
+		<javac destdir="./build/build" encoding="utf-8" classpathref="classpath" debug="on">
+			<src path="./src"></src>
+		</javac>
+		<!-- 拷贝配置 -->
+		<copy todir="./build/build" overwrite="true">
+			<!-- 
+			 -->
+			<fileset dir="./build/conf/${path}" />
+			<!-- 
+			<fileset dir="./develop-config" />
+			 -->
+		</copy>
+		<!-- 打jar包 -->
+		<jar destfile="./build/YaowangChat-plugin.jar">
+			<fileset dir="./build/build"></fileset>
+			<!-- 版本号 -->
+			<manifest>
+		        <attribute name="Built-By" value="yaowang" />
+				<attribute name="Implementation-Title" value="YaowangChat"/>
+				<attribute name="Implementation-Vendor" value="YaowangChat"/>
+				<attribute name="Implementation-Version" value="trunk-YaowangChat-1.0.0-${date.today}"/>
+			</manifest>
+		</jar>
+		<!-- 删除build文件夹 -->
+		<delete dir="./build/build" />
+	</target>
+	
+	<!-- 打war包 -->
+	<target name="YaowangChat-jar" depends="YaowangChat-plugin-jar">
+		<!-- 拷贝配置 -->
+		<copy todir="./build/jar" overwrite="true">
+			<fileset dir="./src">
+				<exclude name="**/com/**"/>
+			</fileset>
+		</copy>
+		<copy todir="./build/jar/web" overwrite="true">
+			<fileset dir="./web">
+			</fileset>
+		</copy>
+		<copyfile dest="./build/jar/lib/YaowangChat-plugin.jar" src="./build/YaowangChat-plugin.jar"/>
+		<copy todir="./build/jar/lib" overwrite="true">
+			<fileset dir="./lib/">
+			</fileset>
+		</copy>
+		<!-- 生成war包 -->
+		<property name="warName" value="YaowangChat.jar" />
+		
+		<jar destfile="./build/${warName}">
+			<fileset dir="./build/jar"></fileset>
+			<!-- 版本号 -->
+			<manifest>
+		        <attribute name="Built-By" value="yaowang" />
+				<attribute name="Implementation-Title" value="YaowangChat"/>
+				<attribute name="Implementation-Vendor" value="YaowangChat"/>
+				<attribute name="Implementation-Version" value="trunk-YaowangChat-1.0.0-${date.today}"/>
+			</manifest>
+		</jar>
+
+		<!-- 删除build目录 -->
+		<delete dir="./build/jar"></delete>
+	</target>
+	
+	<!-- 获取时间 -->
+	<tstamp>
+        <format property="date.today" pattern="yyyyMMdd-HHmm" />
+    </tstamp>
+</project>
