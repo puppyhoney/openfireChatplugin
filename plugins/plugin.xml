@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Plugin configuration for the YaowangChat plugin.
+-->
+<plugin>
+    <class>com.yaowang.openfire.plugin.YaowangChatPlugin</class>
+    <name>YaowangChat</name>
+    <description>群消息推送至离线用户,提供房间,房间成员,房间在线人数,房间发送消息等接口</description>
+    <author>ShenLie</author>
+    <version>1.0.1</version>
+    <date>18/10/2015</date>
+    <url>http://www.ywwl.com</url>
+    <minServerVersion>3.10.2</minServerVersion>
+    
+    <adminconsole>
+        <tab id="tab-server">
+            <sidebar id="sidebar-server-settings">
+            <!--
+                <item id="yaowangchat-listener" name="yaowangchat 缓存刷新" url="yaowangchat-cache.jsp" description="yaowangchat 缓存刷新" />
+            -->
+            </sidebar>
+        </tab>
+    </adminconsole>
+</plugin>

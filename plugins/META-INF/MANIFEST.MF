@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.7.0_17-b02 (Oracle Corporation)
+Built-By: yaowang
+Implementation-Title: YaowangChat
+Implementation-Vendor: YaowangChat
+Implementation-Version: trunk-YaowangChat-1.0.0-20151222-1053
+
